@@ -26,11 +26,11 @@ public class LoginFrame extends javax.swing.JFrame {
 
         pnlLogin = new javax.swing.JPanel();
         txtUserName = new javax.swing.JLabel();
-        edtUser = new javax.swing.JTextField();
+        txtTaiKhoan = new javax.swing.JTextField();
         txtPassword = new javax.swing.JLabel();
         btnThoat = new javax.swing.JButton();
         btnDangNhap = new javax.swing.JButton();
-        edtPass = new javax.swing.JPasswordField();
+        txtMatKhau = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setTitle("LOG IN");
@@ -40,9 +40,9 @@ public class LoginFrame extends javax.swing.JFrame {
 
         txtUserName.setText("Tên đăng nhập");
 
-        edtUser.addActionListener(new java.awt.event.ActionListener() {
+        txtTaiKhoan.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtUserActionPerformed(evt);
+                txtTaiKhoanActionPerformed(evt);
             }
         });
 
@@ -64,9 +64,9 @@ public class LoginFrame extends javax.swing.JFrame {
             }
         });
 
-        edtPass.addActionListener(new java.awt.event.ActionListener() {
+        txtMatKhau.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                edtPassActionPerformed(evt);
+                txtMatKhauActionPerformed(evt);
             }
         });
 
@@ -82,11 +82,11 @@ public class LoginFrame extends javax.swing.JFrame {
                             .addGroup(pnlLoginLayout.createSequentialGroup()
                                 .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 70, javax.swing.GroupLayout.PREFERRED_SIZE)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(edtPass, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))
                             .addGroup(pnlLoginLayout.createSequentialGroup()
                                 .addComponent(txtUserName)
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(edtUser, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                                .addComponent(txtTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, 210, javax.swing.GroupLayout.PREFERRED_SIZE))))
                     .addGroup(pnlLoginLayout.createSequentialGroup()
                         .addGap(52, 52, 52)
                         .addComponent(btnDangNhap, javax.swing.GroupLayout.PREFERRED_SIZE, 124, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -105,9 +105,9 @@ public class LoginFrame extends javax.swing.JFrame {
                     .addGroup(pnlLoginLayout.createSequentialGroup()
                         .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtUserName)
-                            .addComponent(edtUser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                            .addComponent(txtTaiKhoan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(edtPass, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(txtMatKhau, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(pnlLoginLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThoat)
@@ -137,13 +137,13 @@ public class LoginFrame extends javax.swing.JFrame {
         login();
     }//GEN-LAST:event_btnDangNhapActionPerformed
 
-    private void edtUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtUserActionPerformed
+    private void txtTaiKhoanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTaiKhoanActionPerformed
 
-    }//GEN-LAST:event_edtUserActionPerformed
+    }//GEN-LAST:event_txtTaiKhoanActionPerformed
 
-    private void edtPassActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_edtPassActionPerformed
+    private void txtMatKhauActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtMatKhauActionPerformed
 
-    }//GEN-LAST:event_edtPassActionPerformed
+    }//GEN-LAST:event_txtMatKhauActionPerformed
 
     private void centerWindow() {
         // kich thuoc frame
@@ -168,10 +168,10 @@ public class LoginFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnDangNhap;
     private javax.swing.JButton btnThoat;
-    private javax.swing.JPasswordField edtPass;
-    private javax.swing.JTextField edtUser;
     private javax.swing.JPanel pnlLogin;
+    private javax.swing.JPasswordField txtMatKhau;
     private javax.swing.JLabel txtPassword;
+    private javax.swing.JTextField txtTaiKhoan;
     private javax.swing.JLabel txtUserName;
     // End of variables declaration//GEN-END:variables
 }

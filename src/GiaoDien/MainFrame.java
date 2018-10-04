@@ -26,6 +26,7 @@ public class MainFrame extends javax.swing.JFrame {
         btnQLGiangVien = new javax.swing.JButton();
         btnThongKeGioDay = new javax.swing.JButton();
         btnBaoCao = new javax.swing.JButton();
+        btnMonHoc = new javax.swing.JButton();
         pnlHome = new javax.swing.JPanel();
         menuBarMain = new javax.swing.JMenuBar();
         menuFile = new javax.swing.JMenu();
@@ -99,6 +100,18 @@ public class MainFrame extends javax.swing.JFrame {
             }
         });
 
+        btnMonHoc.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/icon_bomon.png"))); // NOI18N
+        btnMonHoc.setText("Môn Học");
+        btnMonHoc.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        btnMonHoc.setMaximumSize(new java.awt.Dimension(101, 41));
+        btnMonHoc.setMinimumSize(new java.awt.Dimension(101, 41));
+        btnMonHoc.setPreferredSize(new java.awt.Dimension(79, 25));
+        btnMonHoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMonHocActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout pnlLeftLayout = new javax.swing.GroupLayout(pnlLeft);
         pnlLeft.setLayout(pnlLeftLayout);
         pnlLeftLayout.setHorizontalGroup(
@@ -106,6 +119,7 @@ public class MainFrame extends javax.swing.JFrame {
             .addGroup(pnlLeftLayout.createSequentialGroup()
                 .addGap(22, 22, 22)
                 .addGroup(pnlLeftLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(btnMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnThongKeGioDay, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(btnQLGiangVien, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -123,7 +137,9 @@ public class MainFrame extends javax.swing.JFrame {
                 .addComponent(btnThongKeGioDay, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(btnBaoCao, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(592, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(btnMonHoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(549, Short.MAX_VALUE))
         );
 
         scrlpaneLeftAdmin.setViewportView(pnlLeft);
@@ -137,7 +153,7 @@ public class MainFrame extends javax.swing.JFrame {
         pnlHome.setLayout(pnlHomeLayout);
         pnlHomeLayout.setHorizontalGroup(
             pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 803, Short.MAX_VALUE)
+            .addGap(0, 50, Short.MAX_VALUE)
         );
         pnlHomeLayout.setVerticalGroup(
             pnlHomeLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -225,6 +241,12 @@ public class MainFrame extends javax.swing.JFrame {
         spltPane.setRightComponent(pnlBaoCao);
     }//GEN-LAST:event_btnBaoCaoActionPerformed
 
+    private void btnMonHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonHocActionPerformed
+        // TODO add your handling code here:
+        QLMonHoc pnlMonHoc1 = new QLMonHoc();
+        spltPane.setRightComponent(pnlMonHoc1);
+    }//GEN-LAST:event_btnMonHocActionPerformed
+
     /*Xác nhận và đăng nhập hệ thống*/
     private void logOut() {
         if (JOptionPane.showConfirmDialog(null, "Bạn có muốn đăng xuất khỏi hệ thống ?", "Thoát", JOptionPane.OK_CANCEL_OPTION, JOptionPane.QUESTION_MESSAGE) == JOptionPane.OK_OPTION) {
@@ -267,6 +289,7 @@ public class MainFrame extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnBaoCao;
     private javax.swing.JButton btnKhoa;
+    private javax.swing.JButton btnMonHoc;
     private javax.swing.JButton btnQLGiangVien;
     private javax.swing.JButton btnThongKeGioDay;
     private javax.swing.JMenuBar menuBarMain;

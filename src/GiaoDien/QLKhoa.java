@@ -43,7 +43,7 @@ public class QLKhoa extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         btnXoaKhoa = new javax.swing.JButton();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        jTableDanhsachKhoa = new javax.swing.JTable();
         jPanel5 = new javax.swing.JPanel();
         pnlTaoKhoa1 = new javax.swing.JPanel();
         btnThemBoMon = new javax.swing.JButton();
@@ -54,7 +54,7 @@ public class QLKhoa extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         cbxTaoTenKhoa_BM = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTable2 = new javax.swing.JTable();
+        jTableDánhachBoMon = new javax.swing.JTable();
         pnlTaoKhoa2 = new javax.swing.JPanel();
         txtSuaMaBoMon = new javax.swing.JTextField();
         txtSuaTenBoMon = new javax.swing.JTextField();
@@ -184,7 +184,7 @@ public class QLKhoa extends javax.swing.JPanel {
 
         jScrollPane2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách khoa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12))); // NOI18N
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDanhsachKhoa.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -200,9 +200,9 @@ public class QLKhoa extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
-        jTable1.setColumnSelectionAllowed(true);
-        jTable1.setPreferredSize(new java.awt.Dimension(700, 300));
-        jScrollPane2.setViewportView(jTable1);
+        jTableDanhsachKhoa.setColumnSelectionAllowed(true);
+        jTableDanhsachKhoa.setPreferredSize(new java.awt.Dimension(700, 300));
+        jScrollPane2.setViewportView(jTableDanhsachKhoa);
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -291,7 +291,7 @@ public class QLKhoa extends javax.swing.JPanel {
 
         jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách bộ môn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12))); // NOI18N
 
-        jTable2.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDánhachBoMon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -307,8 +307,8 @@ public class QLKhoa extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
-        jTable2.setPreferredSize(new java.awt.Dimension(700, 300));
-        jScrollPane3.setViewportView(jTable2);
+        jTableDánhachBoMon.setPreferredSize(new java.awt.Dimension(700, 300));
+        jScrollPane3.setViewportView(jTableDánhachBoMon);
 
         pnlTaoKhoa2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sửa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12))); // NOI18N
 
@@ -477,8 +477,8 @@ public class QLKhoa extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JTabbedPane jTabbedPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTable jTable2;
+    private javax.swing.JTable jTableDanhsachKhoa;
+    private javax.swing.JTable jTableDánhachBoMon;
     private javax.swing.JPanel pnlSuaKhoa;
     private javax.swing.JPanel pnlTaoKhoa;
     private javax.swing.JPanel pnlTaoKhoa1;
