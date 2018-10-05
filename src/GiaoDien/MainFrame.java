@@ -222,7 +222,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThongKeGioDayActionPerformed
 
     private void btnQLGiangVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLGiangVienActionPerformed
-        QLGiangVien pnlGiangVien = new QLGiangVien();
+        QLGiangVienMoi pnlGiangVien = new QLGiangVienMoi();
         spltPane.setRightComponent(pnlGiangVien);
     }//GEN-LAST:event_btnQLGiangVienActionPerformed
 
@@ -243,8 +243,8 @@ public class MainFrame extends javax.swing.JFrame {
 
     private void btnMonHocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMonHocActionPerformed
         // TODO add your handling code here:
-        QLMonHoc pnlMonHoc1 = new QLMonHoc();
-        spltPane.setRightComponent(pnlMonHoc1);
+        QLMonHoc pnlMonHoc = new QLMonHoc();
+        spltPane.setRightComponent(pnlMonHoc);
     }//GEN-LAST:event_btnMonHocActionPerformed
 
     /*Xác nhận và đăng nhập hệ thống*/
