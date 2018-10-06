@@ -16,10 +16,10 @@ public class BoMon {
     public BoMon() {
     }
 
-    public BoMon(String mTenBoMon, String mTenKhoa, int mIDBoMon) {
-        this.mTenBoMon = mTenBoMon;
-        this.mTenKhoa = mTenKhoa;
+    public BoMon(int mIDBoMon, String mTenBoMon, String mTenKhoa) {
         this.mIDBoMon = mIDBoMon;
+        this.mTenBoMon = mTenBoMon;
+        this.mTenKhoa = mTenKhoa; 
     }
 
    

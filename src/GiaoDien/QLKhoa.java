@@ -5,6 +5,18 @@
  */
 package GiaoDien;
 
+import DAO.ConnectionDB;
+import Model.BoMon;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author NguyenAnhPhan
@@ -16,7 +28,44 @@ public class QLKhoa extends javax.swing.JPanel {
      */
     public QLKhoa() {
         initComponents();
+        show_BoMon();
     }
+    public static ArrayList<BoMon> listBoMon(){
+        ArrayList<BoMon> listBM = new ArrayList<>();
+        try {
+           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+             String uRL="jdbc:sqlserver://localhost:1433;databaseName=TTCS;user=sa;password=sa";
+             Connection conn = DriverManager.getConnection(uRL);
+            String query1 = "select BoMon.IDBM, BoMon.TenBM, Khoa.TenKhoa from BoMon full join Khoa on BoMon.IDKhoa = Khoa.IDKhoa";
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(query1);
+            BoMon boMon;
+            while(rs.next()){
+                boMon = new BoMon(rs.getInt("mIDBoMon"), rs.getString("mTenBoMon"), rs.getString("mTenKhoa"));
+                listBM.add(boMon);
+            }
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return listBM;
+       
+    }
+    public void show_BoMon(){
+        ArrayList<BoMon> list = listBoMon();
+        DefaultTableModel model = (DefaultTableModel)jTableDanhsachBoMon.getModel();
+        Object[] row = new Object[3];
+         for(BoMon objBoMon: list){
+            row[0] = objBoMon.getmIDBoMon();
+            row[1] = objBoMon.getmTenBoMon();
+            row[2] = objBoMon.getmTenKhoa();
+            model.addRow(row);
+            
+        }
+        jTableDanhsachBoMon.setModel(model);
+        
+                }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -60,7 +109,7 @@ public class QLKhoa extends javax.swing.JPanel {
         jLabel19 = new javax.swing.JLabel();
         cbxTaoTenKhoa_BM = new javax.swing.JComboBox<>();
         jScrollPane3 = new javax.swing.JScrollPane();
-        jTableDánhachBoMon = new javax.swing.JTable();
+        jTableDanhsachBoMon = new javax.swing.JTable();
         pnlTaoKhoa2 = new javax.swing.JPanel();
         txtSuaMaBoMon = new javax.swing.JTextField();
         txtSuaTenBoMon = new javax.swing.JTextField();
@@ -338,7 +387,7 @@ public class QLKhoa extends javax.swing.JPanel {
 
         jScrollPane3.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Danh sách bộ môn", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12))); // NOI18N
 
-        jTableDánhachBoMon.setModel(new javax.swing.table.DefaultTableModel(
+        jTableDanhsachBoMon.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
 
             },
@@ -354,8 +403,8 @@ public class QLKhoa extends javax.swing.JPanel {
                 return types [columnIndex];
             }
         });
-        jTableDánhachBoMon.setPreferredSize(new java.awt.Dimension(700, 300));
-        jScrollPane3.setViewportView(jTableDánhachBoMon);
+        jTableDanhsachBoMon.setPreferredSize(new java.awt.Dimension(700, 300));
+        jScrollPane3.setViewportView(jTableDanhsachBoMon);
 
         pnlTaoKhoa2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sửa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12))); // NOI18N
 
@@ -528,8 +577,8 @@ public class QLKhoa extends javax.swing.JPanel {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTable jTableDanhsachBoMon;
     private javax.swing.JTable jTableDanhsachKhoa;
-    private javax.swing.JTable jTableDánhachBoMon;
     private javax.swing.JPanel pnlSuaKhoa;
     private javax.swing.JPanel pnlTaoKhoa;
     private javax.swing.JPanel pnlTaoKhoa1;
