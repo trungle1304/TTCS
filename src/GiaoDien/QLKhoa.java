@@ -5,7 +5,8 @@
  */
 package GiaoDien;
 
-import DAO.ConnectionDB;
+import DAO.Connect;
+import DAO.KhoaDAO;
 import Model.BoMon;
 import java.sql.Connection;
 import java.sql.DriverManager;
@@ -26,10 +27,13 @@ public class QLKhoa extends javax.swing.JPanel {
     /**
      * Creates new form QLKhoaMoi
      */
+    public static String sql="SELECT*FROM Khoa";
     static Statement st;
     public QLKhoa() {
         initComponents();
         show_BoMon();
+        KhoaDAO.LoadBangKhoa(sql, jTableDanhsachKhoa);
+        
     }
     public static ArrayList<BoMon> listBoMon(){
         ArrayList<BoMon> listBM = new ArrayList<>();
