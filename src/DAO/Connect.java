@@ -15,13 +15,11 @@ import java.util.logging.Logger;
  *
  * @author NguyenAnhPhan
  */
-public class ConnectionDB {
-
-    Connection conn=null;
-
-    public Connection getConnectionDB() {
+public class Connect {
+    public static Connection getConnect() {
+        Connection conn=null;
         try {
-            String uRL="jdbc:sqlserver://127.0.0.1:1433;databaseName=TTCS";
+            String uRL="jdbc:sqlserver://localhost:1433;databaseName=TTCS";
             String user="sa";
             String pass="sa";
             Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
@@ -29,10 +27,9 @@ public class ConnectionDB {
             System.out.println("Kết nối Database thành công");
         } catch (Exception e) {
             System.out.println("Kết nối Database thất bại!!!");
-            
+            return  null;
         }
         return conn;
-
     }
   
 }
