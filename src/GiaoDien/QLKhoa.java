@@ -17,7 +17,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import javax.swing.JOptionPane;
+import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -35,12 +35,13 @@ public class QLKhoa extends javax.swing.JPanel {
     String query1 = "select * from BoMon";
     String query2 = "select TenKhoa from Khoa order by TenKhoa asc";
 
+    public static String makhoa;
+
+
     public QLKhoa() {
         initComponents();
         KhoaDAO.LoadTableBangKhoa(sql, jTableDanhsachKhoa);
-        KhoaDAO.LoadTableBangKhoa(query1, jTableDanhsachBoMon);
-        KhoaDAO.LoadCombobx(query2, cbxTaoTenKhoa_BM, "TenKhoa");
-
+  
     }
     
     
@@ -116,7 +117,7 @@ public class QLKhoa extends javax.swing.JPanel {
         jLabel14 = new javax.swing.JLabel();
         btnXoaKhoa = new javax.swing.JButton();
         jScrollPane4 = new javax.swing.JScrollPane();
-        txtAreaMoTaSua = new javax.swing.JTextArea();
+        txtAreaSuaMoTaKhoa = new javax.swing.JTextArea();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
         jTableDanhsachKhoa = new javax.swing.JTable();
@@ -239,9 +240,9 @@ public class QLKhoa extends javax.swing.JPanel {
             }
         });
 
-        txtAreaMoTaSua.setColumns(20);
-        txtAreaMoTaSua.setRows(5);
-        jScrollPane4.setViewportView(txtAreaMoTaSua);
+        txtAreaSuaMoTaKhoa.setColumns(20);
+        txtAreaSuaMoTaKhoa.setRows(5);
+        jScrollPane4.setViewportView(txtAreaSuaMoTaKhoa);
 
         jLabel2.setText("Mô tả");
 
@@ -555,35 +556,51 @@ public class QLKhoa extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKhoaActionPerformed
-        if (txtTaoTenKhoa.getText().length() == 0) {
+        if (txtTaoTenKhoa.getText().length() == 0 || txtAreaMoTaThem.getText().length() == 0) {
             JOptionPane.showMessageDialog(null, "Bạn không được để trường trống");
         } else {
-            JOptionPane.showMessageDialog(null, "Thêm thành công");
+            KhoaDAO.ThemKhoa(this.txtTaoTenKhoa.getText().trim(), this.txtAreaMoTaThem.getText().trim());
+            JOptionPane.showMessageDialog(null, "Thêm thành công khoa " + txtTaoTenKhoa.getText().toString().trim());
+            KhoaDAO.LoadTableBangKhoa(sql, jTableDanhsachKhoa);
+         
         }
     }//GEN-LAST:event_btnThemKhoaActionPerformed
 
     private void btnCapNhatKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatKhoaActionPerformed
-
+        KhoaDAO.CapNhatKhoa(makhoa, this.txtSuaTenKhoa.getText().toString().trim(), this.txtAreaSuaMoTaKhoa.getText().toString().trim());
+        JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công", "Thông báo", 1);
+        txtSuaMaKhoa.setText("");
+        txtSuaTenKhoa.setText("");
+        txtAreaSuaMoTaKhoa.setText("");
+        KhoaDAO.LoadTableBangKhoa(sql, jTableDanhsachKhoa);
     }//GEN-LAST:event_btnCapNhatKhoaActionPerformed
 
     private void btnXoaKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaKhoaActionPerformed
+        if ((JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa khoa " + makhoa + " hay không?", "Thông báo", 2)) == 0) {
+            KhoaDAO.XoaKhoa(makhoa);
+            txtSuaMaKhoa.setText("");
+            txtSuaTenKhoa.setText("");
+            txtAreaSuaMoTaKhoa.setText("");
 
+            KhoaDAO.LoadTableBangKhoa(sql, jTableDanhsachKhoa);
+        }
     }//GEN-LAST:event_btnXoaKhoaActionPerformed
 
     private void btnThemBoMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemBoMonActionPerformed
         try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+            String uRL = "jdbc:sqlserver://localhost:1433;databaseName=TTCS;user=sa;password=sa";
+            conn = DriverManager.getConnection(uRL);
             String query3 = "insert into BoMon values (?,?)";
             pst = conn.prepareStatement(query3);
             String choose;
             choose = cbxTaoTenKhoa_BM.getSelectedItem().toString();
             pst.setString(1, choose);
-            if (txtTaoTenBoMon.getText().equals("")) {
-                JOptionPane.showMessageDialog(null, "Tên bộ môn không được để trống");
-            } else {
-                pst.setString(2, txtTaoTenBoMon.getText());
-                pst.executeUpdate();
-                JOptionPane.showMessageDialog(null, "Thêm thành công!");
-            }
+            pst.setString(2, txtTaoTenBoMon.getText());
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Thêm thành công!");
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -599,7 +616,26 @@ public class QLKhoa extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaBoMonActionPerformed
 
     private void jTableDanhsachKhoaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDanhsachKhoaMouseClicked
-        // TODO add your handling code here:
+        try {
+            txtTaoTenKhoa.setText("");
+            txtAreaMoTaThem.setText("");
+            int row = this.jTableDanhsachKhoa.getSelectedRow();//Lấy dòng hiện tại mình đang nhấn chuột
+            String IDrow = (this.jTableDanhsachKhoa.getModel().getValueAt(row, 0)).toString();//Lấy giá trị ở dòng 1 nhấn
+
+            //và lấy giá trị đó đổi ra string
+            String sql1 = "SELECT * FROM Khoa WHERE IDKhoa='" + IDrow + "'";
+            ResultSet rs = KhoaDAO.ShowTextField(sql1);
+            //đọc dữ liệu tại dòng có mã được chọn
+            if (rs.next())//nếu có dữ liệu
+            {
+                makhoa = rs.getString("IDKhoa");
+                this.txtSuaMaKhoa.setText(rs.getString("IDKhoa"));
+                this.txtSuaTenKhoa.setText(rs.getString("TenKhoa"));
+                this.txtAreaSuaMoTaKhoa.setText(rs.getString("MoTaKhoa"));
+            }
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Bạn phải chọn vào 1 dòng dữ liệu!");
+        }
     }//GEN-LAST:event_jTableDanhsachKhoaMouseClicked
 
     private void txtSuaTenKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSuaTenKhoaActionPerformed
@@ -664,8 +700,8 @@ public class QLKhoa extends javax.swing.JPanel {
     private javax.swing.JPanel pnlTaoKhoa;
     private javax.swing.JPanel pnlTaoKhoa1;
     private javax.swing.JPanel pnlTaoKhoa2;
-    private javax.swing.JTextArea txtAreaMoTaSua;
     private javax.swing.JTextArea txtAreaMoTaThem;
+    private javax.swing.JTextArea txtAreaSuaMoTaKhoa;
     private javax.swing.JTextField txtSuaMaBoMon;
     private javax.swing.JTextField txtSuaMaKhoa;
     private javax.swing.JTextField txtSuaTenBoMon;
