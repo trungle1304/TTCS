@@ -26,6 +26,7 @@ public class QLKhoa extends javax.swing.JPanel {
     /**
      * Creates new form QLKhoaMoi
      */
+    static Statement st;
     public QLKhoa() {
         initComponents();
         show_BoMon();
@@ -37,11 +38,11 @@ public class QLKhoa extends javax.swing.JPanel {
              String uRL="jdbc:sqlserver://localhost:1433;databaseName=TTCS;user=sa;password=sa";
              Connection conn = DriverManager.getConnection(uRL);
             String query1 = "select BoMon.IDBM, BoMon.TenBM, Khoa.TenKhoa from BoMon full join Khoa on BoMon.IDKhoa = Khoa.IDKhoa";
-            Statement st = conn.createStatement();
+             st = conn.createStatement();
             ResultSet rs = st.executeQuery(query1);
             BoMon boMon;
             while(rs.next()){
-                boMon = new BoMon(rs.getInt("mIDBoMon"), rs.getString("mTenBoMon"), rs.getString("mTenKhoa"));
+                boMon = new BoMon(rs.getInt("IDBM"), rs.getString("TenBM"), rs.getString("TenKhoa"));
                 listBM.add(boMon);
             }
         } catch (ClassNotFoundException ex) {
@@ -537,7 +538,19 @@ public class QLKhoa extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaKhoaActionPerformed
 
     private void btnThemBoMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemBoMonActionPerformed
-        // TODO add your handling code here:
+        try {
+           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+             String uRL="jdbc:sqlserver://localhost:1433;databaseName=TTCS;user=sa;password=sa";
+             Connection conn = DriverManager.getConnection(uRL);
+             String query2 = "select TenKhoa from Khoa";
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+        
+        
     }//GEN-LAST:event_btnThemBoMonActionPerformed
 
     private void btnCapNhatBoMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatBoMonActionPerformed
