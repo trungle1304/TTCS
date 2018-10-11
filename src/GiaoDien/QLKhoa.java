@@ -9,12 +9,14 @@ import DAO.ConnectionDB;
 import Model.BoMon;
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
 /**
@@ -26,20 +28,26 @@ public class QLKhoa extends javax.swing.JPanel {
     /**
      * Creates new form QLKhoaMoi
      */
+    static Connection conn;
     static Statement st;
+    static ResultSet rs;
+    static PreparedStatement pst;
+    
+    
     public QLKhoa() {
         initComponents();
         show_BoMon();
+        loadTenKhoa();
     }
     public static ArrayList<BoMon> listBoMon(){
         ArrayList<BoMon> listBM = new ArrayList<>();
         try {
            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              String uRL="jdbc:sqlserver://localhost:1433;databaseName=TTCS;user=sa;password=sa";
-             Connection conn = DriverManager.getConnection(uRL);
-            String query1 = "select BoMon.IDBM, BoMon.TenBM, Khoa.TenKhoa from BoMon full join Khoa on BoMon.IDKhoa = Khoa.IDKhoa";
+             conn = DriverManager.getConnection(uRL);
+            String query1 = "select * from BoMon";
              st = conn.createStatement();
-            ResultSet rs = st.executeQuery(query1);
+             rs = st.executeQuery(query1);
             BoMon boMon;
             while(rs.next()){
                 boMon = new BoMon(rs.getInt("IDBM"), rs.getString("TenBM"), rs.getString("TenKhoa"));
@@ -67,6 +75,25 @@ public class QLKhoa extends javax.swing.JPanel {
         jTableDanhsachBoMon.setModel(model);
         
                 }
+    public void loadTenKhoa(){
+        try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+             String uRL="jdbc:sqlserver://localhost:1433;databaseName=TTCS;user=sa;password=sa";
+             conn = DriverManager.getConnection(uRL);
+            String query2 = "select TenKhoa from Khoa order by TenKhoa asc";
+             pst = conn.prepareStatement(query2);
+             rs = pst.executeQuery();
+            while(rs.next()){
+               cbxTaoTenKhoa_BM.addItem(rs.getString("TenKhoa"));
+            }
+             
+        } catch (ClassNotFoundException ex) {
+            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+        } catch (SQLException ex) {
+            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -345,8 +372,6 @@ public class QLKhoa extends javax.swing.JPanel {
         jLabel19.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel19.setText("Tên khoa");
 
-        cbxTaoTenKhoa_BM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
         javax.swing.GroupLayout pnlTaoKhoa1Layout = new javax.swing.GroupLayout(pnlTaoKhoa1);
         pnlTaoKhoa1.setLayout(pnlTaoKhoa1Layout);
         pnlTaoKhoa1Layout.setHorizontalGroup(
@@ -538,18 +563,23 @@ public class QLKhoa extends javax.swing.JPanel {
     }//GEN-LAST:event_btnXoaKhoaActionPerformed
 
     private void btnThemBoMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemBoMonActionPerformed
-        try {
-           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
+     try {
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
              String uRL="jdbc:sqlserver://localhost:1433;databaseName=TTCS;user=sa;password=sa";
-             Connection conn = DriverManager.getConnection(uRL);
-             String query2 = "select TenKhoa from Khoa";
-        } catch (ClassNotFoundException ex) {
+             conn = DriverManager.getConnection(uRL);
+             String query3 = "insert into BoMon values (?,?)";
+             pst = conn.prepareStatement(query3);
+             String choose;
+             choose = cbxTaoTenKhoa_BM.getSelectedItem().toString();
+             pst.setString(1, choose);
+             pst.setString(2, txtTaoTenBoMon.getText());
+             pst.executeUpdate();
+             JOptionPane.showMessageDialog(null, "Thêm thành công!");
+     }  catch (ClassNotFoundException ex) {
             Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
         } catch (SQLException ex) {
             Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
-        
         
     }//GEN-LAST:event_btnThemBoMonActionPerformed
 
