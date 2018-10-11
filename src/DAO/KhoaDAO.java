@@ -21,7 +21,7 @@ public class KhoaDAO {
     public static ResultSet rs = null;
     public static Connection conn = Connect.getConnect();
 
-    public static void LoadBangKhoa(String sql, JTable tb) {
+    public static void LoadTableBangKhoa(String sql, JTable tb) {
         try {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
@@ -31,6 +31,7 @@ public class KhoaDAO {
             JOptionPane.showMessageDialog(null, e, "Thông báo lỗi", 1);
         }
     }
+   
 
     //Tiếp theo viết 1 hàm đổ dòng dữ liệu
     public static ResultSet ShowTextField(String sql) {

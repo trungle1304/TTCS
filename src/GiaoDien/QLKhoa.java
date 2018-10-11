@@ -41,7 +41,7 @@ public class QLKhoa extends javax.swing.JPanel {
 
         loadTenKhoa();
 
-        KhoaDAO.LoadBangKhoa(sql, jTableDanhsachKhoa);
+        KhoaDAO.LoadTableBangKhoa(sql, jTableDanhsachKhoa);
         
 
     }
