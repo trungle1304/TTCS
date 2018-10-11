@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import net.proteanit.sql.DbUtils;
 
 /**
@@ -26,6 +29,7 @@ public class KhoaDAO {
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
             tb.setModel((DbUtils.resultSetToTableModel(rs)));
+            
             //ngay chỗ này là nạp dữ liệu lên bảng
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e, "Thông báo lỗi", 1);
@@ -43,6 +47,17 @@ public class KhoaDAO {
 
             //    JOptionPane.showMessageDialog(null, e,"Thông báo lỗi",1);
             return null;
+        }
+    }
+    public static void LoadCombobx(String sql, JComboBox comboBox, String tenCotTrongSql){
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+             while(rs.next()){
+             comboBox.addItem(rs.getString(tenCotTrongSql));
+          }
+        } catch (SQLException ex) {
+            Logger.getLogger(KhoaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 

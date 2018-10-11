@@ -37,6 +37,11 @@ public class MainFrame extends javax.swing.JFrame {
         setTitle("Thống kê khối lượng giảng dạy");
         setPreferredSize(new java.awt.Dimension(1100, 700));
         setResizable(false);
+        addWindowListener(new java.awt.event.WindowAdapter() {
+            public void windowOpened(java.awt.event.WindowEvent evt) {
+                formWindowOpened(evt);
+            }
+        });
 
         spltPane.setDividerLocation(220);
         spltPane.setDividerSize(0);
@@ -246,6 +251,11 @@ public class MainFrame extends javax.swing.JFrame {
         QLMonHoc pnlMonHoc = new QLMonHoc();
         spltPane.setRightComponent(pnlMonHoc);
     }//GEN-LAST:event_btnMonHocActionPerformed
+
+    private void formWindowOpened(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowOpened
+
+        
+    }//GEN-LAST:event_formWindowOpened
 
     /*Xác nhận và đăng nhập hệ thống*/
     private void logOut() {

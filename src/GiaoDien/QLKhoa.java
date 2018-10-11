@@ -26,80 +26,69 @@ import javax.swing.table.DefaultTableModel;
  */
 public class QLKhoa extends javax.swing.JPanel {
 
-    static Connection conn;
+    public static Connection conn = Connect.getConnect();
+    PreparedStatement pst;
+    ResultSet rs;
+    Statement st;
 
-    public static String sql="SELECT*FROM Khoa";
+    public static String sql = "SELECT*FROM Khoa";
+    String query1 = "select * from BoMon";
+    String query2 = "select TenKhoa from Khoa order by TenKhoa asc";
 
-    static Statement st;
-    static ResultSet rs;
-    static PreparedStatement pst;
-    
-    
     public QLKhoa() {
         initComponents();
-        show_BoMon();
-
-        loadTenKhoa();
-
         KhoaDAO.LoadTableBangKhoa(sql, jTableDanhsachKhoa);
-        
+        KhoaDAO.LoadTableBangKhoa(query1, jTableDanhsachBoMon);
+        KhoaDAO.LoadCombobx(query2, cbxTaoTenKhoa_BM, "TenKhoa");
 
     }
-    public static ArrayList<BoMon> listBoMon(){
-        ArrayList<BoMon> listBM = new ArrayList<>();
-        try {
-           Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-             String uRL="jdbc:sqlserver://localhost:1433;databaseName=TTCS;user=sa;password=sa";
-             conn = DriverManager.getConnection(uRL);
-            String query1 = "select * from BoMon";
-             st = conn.createStatement();
-             rs = st.executeQuery(query1);
-            BoMon boMon;
-            while(rs.next()){
-                boMon = new BoMon(rs.getInt("IDBM"), rs.getString("TenBM"), rs.getString("TenKhoa"));
-                listBM.add(boMon);
-            }
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        return listBM;
-       
-    }
-    public void show_BoMon(){
-        ArrayList<BoMon> list = listBoMon();
-        DefaultTableModel model = (DefaultTableModel)jTableDanhsachBoMon.getModel();
-        Object[] row = new Object[3];
-         for(BoMon objBoMon: list){
-            row[0] = objBoMon.getmIDBoMon();
-            row[1] = objBoMon.getmTenBoMon();
-            row[2] = objBoMon.getmTenKhoa();
-            model.addRow(row);
-            
-        }
-        jTableDanhsachBoMon.setModel(model);
-        
-                }
-    public void loadTenKhoa(){
-        try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-             String uRL="jdbc:sqlserver://localhost:1433;databaseName=TTCS;user=sa;password=sa";
-             conn = DriverManager.getConnection(uRL);
-            String query2 = "select TenKhoa from Khoa order by TenKhoa asc";
-             pst = conn.prepareStatement(query2);
-             rs = pst.executeQuery();
-            while(rs.next()){
-               cbxTaoTenKhoa_BM.addItem(rs.getString("TenKhoa"));
-            }
-             
-        } catch (ClassNotFoundException ex) {
-            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
-        } catch (SQLException ex) {
-            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
-        }
-        
-    }
+    
+    
+//    public static ArrayList<BoMon> listBoMon(){
+//        ArrayList<BoMon> listBM = new ArrayList<>();
+//        try {
+//            String query1 = "select * from BoMon";
+//             st = conn.createStatement();
+//             rs = st.executeQuery(query1);
+//            BoMon boMon;
+//            while(rs.next()){
+//                boMon = new BoMon(rs.getInt("IDBM"), rs.getString("TenBM"), rs.getString("TenKhoa"));
+//                listBM.add(boMon);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return listBM;
+//       
+//    }
+//    public void show_BoMon(){
+//        ArrayList<BoMon> list = listBoMon();
+//        DefaultTableModel model = (DefaultTableModel)jTableDanhsachBoMon.getModel();
+//        Object[] row = new Object[3];
+//         for(BoMon objBoMon: list){
+//            row[0] = objBoMon.getmIDBoMon();
+//            row[1] = objBoMon.getmTenBoMon();
+//            row[2] = objBoMon.getmTenKhoa();
+//            model.addRow(row);
+//            
+//        }
+//        jTableDanhsachBoMon.setModel(model);
+//        
+//                }
+//    public void loadTenKhoa(){
+//        try {
+//            String query2 = "select TenKhoa from Khoa order by TenKhoa asc";
+//             pst = conn.prepareStatement(query2);
+//             rs = pst.executeQuery();
+//            while(rs.next()){
+//               cbxTaoTenKhoa_BM.addItem(rs.getString("TenKhoa"));
+//            }
+//             
+//        }  catch (SQLException ex) {
+//            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        
+//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -436,6 +425,11 @@ public class QLKhoa extends javax.swing.JPanel {
             }
         });
         jTableDanhsachBoMon.setPreferredSize(new java.awt.Dimension(700, 300));
+        jTableDanhsachBoMon.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableDanhsachBoMonMouseClicked(evt);
+            }
+        });
         jScrollPane3.setViewportView(jTableDanhsachBoMon);
 
         pnlTaoKhoa2.setBorder(javax.swing.BorderFactory.createTitledBorder(null, "Sửa", javax.swing.border.TitledBorder.DEFAULT_JUSTIFICATION, javax.swing.border.TitledBorder.DEFAULT_POSITION, new java.awt.Font("Arial", 1, 12))); // NOI18N
@@ -451,8 +445,6 @@ public class QLKhoa extends javax.swing.JPanel {
 
         jLabel22.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel22.setText("Tên khoa");
-
-        cbxSuaTenKhoa_BM.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnCapNhatBoMon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         btnCapNhatBoMon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_save.png"))); // NOI18N
@@ -563,41 +555,39 @@ public class QLKhoa extends javax.swing.JPanel {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnThemKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemKhoaActionPerformed
-        if(txtTaoTenKhoa.getText().length()==0){
+        if (txtTaoTenKhoa.getText().length() == 0) {
             JOptionPane.showMessageDialog(null, "Bạn không được để trường trống");
-        }
-        else{
+        } else {
             JOptionPane.showMessageDialog(null, "Thêm thành công");
         }
     }//GEN-LAST:event_btnThemKhoaActionPerformed
 
     private void btnCapNhatKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatKhoaActionPerformed
-        
+
     }//GEN-LAST:event_btnCapNhatKhoaActionPerformed
 
     private void btnXoaKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaKhoaActionPerformed
-        
+
     }//GEN-LAST:event_btnXoaKhoaActionPerformed
 
     private void btnThemBoMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemBoMonActionPerformed
-     try {
-            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");
-             String uRL="jdbc:sqlserver://localhost:1433;databaseName=TTCS;user=sa;password=sa";
-             conn = DriverManager.getConnection(uRL);
-             String query3 = "insert into BoMon values (?,?)";
-             pst = conn.prepareStatement(query3);
-             String choose;
-             choose = cbxTaoTenKhoa_BM.getSelectedItem().toString();
-             pst.setString(1, choose);
-             pst.setString(2, txtTaoTenBoMon.getText());
-             pst.executeUpdate();
-             JOptionPane.showMessageDialog(null, "Thêm thành công!");
-     }  catch (ClassNotFoundException ex) {
-            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+        try {
+            String query3 = "insert into BoMon values (?,?)";
+            pst = conn.prepareStatement(query3);
+            String choose;
+            choose = cbxTaoTenKhoa_BM.getSelectedItem().toString();
+            pst.setString(1, choose);
+            if (txtTaoTenBoMon.getText().equals("")) {
+                JOptionPane.showMessageDialog(null, "Tên bộ môn không được để trống");
+            } else {
+                pst.setString(2, txtTaoTenBoMon.getText());
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Thêm thành công!");
+            }
         } catch (SQLException ex) {
             Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+
     }//GEN-LAST:event_btnThemBoMonActionPerformed
 
     private void btnCapNhatBoMonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCapNhatBoMonActionPerformed
@@ -619,6 +609,27 @@ public class QLKhoa extends javax.swing.JPanel {
     private void txtSuaMaKhoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtSuaMaKhoaActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtSuaMaKhoaActionPerformed
+
+    private void jTableDanhsachBoMonMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableDanhsachBoMonMouseClicked
+        try {
+            int row1 = this.jTableDanhsachBoMon.getSelectedRow();
+            String IDrow1 = (this.jTableDanhsachBoMon.getModel().getValueAt(row1, 0)).toString();
+            
+            String query3 = "select * from BoMon where IDBM='"+IDrow1+"'";
+            rs = KhoaDAO.ShowTextField(query3);
+            if(rs.next()){
+                this.txtSuaMaBoMon.setText(rs.getString("IDBM"));
+                this.txtSuaTenBoMon.setText(rs.getString("TenBM"));
+                
+            }
+             KhoaDAO.LoadCombobx(query2, cbxSuaTenKhoa_BM, "TenKhoa");
+           
+             
+        } catch (SQLException ex) {
+            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        
+    }//GEN-LAST:event_jTableDanhsachBoMonMouseClicked
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
