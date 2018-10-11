@@ -9,6 +9,9 @@ import javax.swing.*;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.swing.table.DefaultTableModel;
 import net.proteanit.sql.DbUtils;
 
@@ -81,6 +84,17 @@ public class KhoaDAO {
             
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, "Khoa "+idKhoa+" có thể đã được sử dụng ở thực thể khác nên không thể xóa", "Thông báo", 1);
+        }
+    }
+    public static void LoadCombobx(String sql, JComboBox comboBox, String tenCotTrongSql){
+        try {
+            pst = conn.prepareStatement(sql);
+            rs = pst.executeQuery();
+             while(rs.next()){
+             comboBox.addItem(rs.getString(tenCotTrongSql));
+          }
+        } catch (SQLException ex) {
+            Logger.getLogger(KhoaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
 
