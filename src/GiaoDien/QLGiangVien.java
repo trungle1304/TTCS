@@ -5,6 +5,8 @@
  */
 package GiaoDien;
 
+import DAO.KhoaDAO;
+
 /**
  *
  * @author NguyenAnhPhan
@@ -16,6 +18,8 @@ public class QLGiangVien extends javax.swing.JPanel {
      */
     public QLGiangVien() {
         initComponents();
+        String sql="SELECT TenKhoa From Khoa";
+        KhoaDAO.LoadCombobx(sql, cbxKhoaGV, "TenKhoa");
     }
 
     /**
@@ -84,10 +88,6 @@ public class QLGiangVien extends javax.swing.JPanel {
 
         jLabel2.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel2.setText("Bộ môn");
-
-        cbxKhoaGV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Chọn khoa--", "Khoa Cơ bản", "Khoa An toàn thông tin", "Khoa Mật Mã", "Khoa Lý luận chính trị", "Khoa Điện tử viễn thông", "Khoa Công nghệ thông tin", "Khoa QS & GDTC", "Trung tâm Thực hành Kỹ thuật Mật Mã", "Hệ Quản lý Học viên - Sinh Viên" }));
-
-        cbxBoMonGV.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         jLabel3.setFont(new java.awt.Font("Arial", 0, 14)); // NOI18N
         jLabel3.setText("Tên giảng viên");

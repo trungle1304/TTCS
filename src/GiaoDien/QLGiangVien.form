@@ -190,18 +190,7 @@
                 <Component class="javax.swing.JComboBox" name="cbxKhoaGV">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="10">
-                        <StringItem index="0" value="--Ch&#x1ecd;n khoa--"/>
-                        <StringItem index="1" value="Khoa C&#x1a1; b&#x1ea3;n"/>
-                        <StringItem index="2" value="Khoa An to&#xe0;n th&#xf4;ng tin"/>
-                        <StringItem index="3" value="Khoa M&#x1ead;t M&#xe3;"/>
-                        <StringItem index="4" value="Khoa L&#xfd; lu&#x1ead;n ch&#xed;nh tr&#x1ecb;"/>
-                        <StringItem index="5" value="Khoa &#x110;i&#x1ec7;n t&#x1eed; vi&#x1ec5;n th&#xf4;ng"/>
-                        <StringItem index="6" value="Khoa C&#xf4;ng ngh&#x1ec7; th&#xf4;ng tin"/>
-                        <StringItem index="7" value="Khoa QS &amp; GDTC"/>
-                        <StringItem index="8" value="Trung t&#xe2;m Th&#x1ef1;c h&#xe0;nh K&#x1ef9; thu&#x1ead;t M&#x1ead;t M&#xe3;"/>
-                        <StringItem index="9" value="H&#x1ec7; Qu&#x1ea3;n l&#xfd; H&#x1ecd;c vi&#xea;n - Sinh Vi&#xea;n"/>
-                      </StringArray>
+                      <StringArray count="0"/>
                     </Property>
                   </Properties>
                   <AuxValues>
@@ -211,12 +200,7 @@
                 <Component class="javax.swing.JComboBox" name="cbxBoMonGV">
                   <Properties>
                     <Property name="model" type="javax.swing.ComboBoxModel" editor="org.netbeans.modules.form.editors2.ComboBoxModelEditor">
-                      <StringArray count="4">
-                        <StringItem index="0" value="Item 1"/>
-                        <StringItem index="1" value="Item 2"/>
-                        <StringItem index="2" value="Item 3"/>
-                        <StringItem index="3" value="Item 4"/>
-                      </StringArray>
+                      <StringArray count="0"/>
                     </Property>
                   </Properties>
                   <AuxValues>

@@ -5,17 +5,49 @@
  */
 package GiaoDien;
 
+import DAO.Connect;
+import DAO.KhoaDAO;
+import static DAO.KhoaDAO.conn;
+import static DAO.KhoaDAO.pst;
+import static DAO.KhoaDAO.rs;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author trung
  */
 public class QLMonHoc extends javax.swing.JPanel {
 
-    /**
-     * Creates new form QLMonHocMoi
-     */
+    public static Connection conn = Connect.getConnect();
+    public static PreparedStatement pst, pst1 = null;
+    public static ResultSet rs, rs1 = null;
+    public static Statement st = null;
+    String gender;
+    String sql = "select * from MonHoc";
+
     public QLMonHoc() {
         initComponents();
+        listConMonHoc();
+            KhoaDAO.LoadTableBangKhoa(sql, jTableMonHoc);
+    }
+
+    public void listConMonHoc() {
+        String query1 = "select ChuyenNganhDT from ChuyenNganh";
+        String query2 = "select KhoaDT from KhoaDaoTao";
+        String query3 = "select NamHoc from NamHocDaoTao";
+        String query4 = "select DVHT_TC from TinChi";
+        KhoaDAO.LoadCombobx(query1, cbxChuyenNganhDaoTao, "ChuyenNganhDT");
+        KhoaDAO.LoadCombobx(query2, cbxKhoaDaoTao, "KhoaDT");
+        KhoaDAO.LoadCombobx(query3, cbxNamHoc, "NamHoc");
+        KhoaDAO.LoadCombobx(query4, cbxDonViHocTrinhTC, "DVHT_TC");
     }
 
     /**
@@ -27,6 +59,7 @@ public class QLMonHoc extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         txtMaMH = new javax.swing.JTextField();
@@ -66,30 +99,55 @@ public class QLMonHoc extends javax.swing.JPanel {
 
         jLabel7.setText("Năm học");
 
-        cbxChuyenNganhDaoTao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        cbxChuyenNganhDaoTao.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxChuyenNganhDaoTaoActionPerformed(evt);
+            }
+        });
 
-        cbxKhoaDaoTao.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
+        buttonGroup1.add(rdbHocKy1);
         rdbHocKy1.setText("Học kỳ I");
+        rdbHocKy1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdbHocKy1ActionPerformed(evt);
+            }
+        });
 
+        buttonGroup1.add(rdbHocKy2);
         rdbHocKy2.setText("Học kỳ II");
-
-        cbxNamHoc.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
 
         btnXoaMH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btn_delete.png"))); // NOI18N
         btnXoaMH.setText("Xóa");
+        btnXoaMH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXoaMHActionPerformed(evt);
+            }
+        });
 
         btnSuaMH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/edit.png"))); // NOI18N
         btnSuaMH.setText("Sửa");
+        btnSuaMH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnSuaMHActionPerformed(evt);
+            }
+        });
 
         btnThemMH.setIcon(new javax.swing.ImageIcon(getClass().getResource("/Images/btn_add.png"))); // NOI18N
         btnThemMH.setText("Thêm");
+        btnThemMH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnThemMHActionPerformed(evt);
+            }
+        });
 
         btnTimKiemMH.setText("Tìm kiếm theo tên");
+        btnTimKiemMH.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnTimKiemMHActionPerformed(evt);
+            }
+        });
 
         jLabel8.setText("DVHT/TC");
-
-        cbxDonViHocTrinhTC.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "1", "2", "3", "4" }));
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -211,6 +269,11 @@ public class QLMonHoc extends javax.swing.JPanel {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
+        jTableMonHoc.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jTableMonHocMouseClicked(evt);
+            }
+        });
         jScrollPane1.setViewportView(jTableMonHoc);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
@@ -230,12 +293,184 @@ public class QLMonHoc extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
+//    public boolean checkMaMH(){
+//        ArrayList<String> list=new ArrayList<>();
+//        try {
+//            String sql = "SELECT TenMh FROM MonHoc";
+//             st = conn.createStatement();
+//             rs = st.executeQuery(sql);
+//           
+//            while(rs.next()){
+//                boMon = new BoMon(rs.getInt("IDBM"), rs.getString("TenBM"), rs.getString("TenKhoa"));
+//                listBM.add(boMon);
+//            }
+//        } catch (SQLException ex) {
+//            Logger.getLogger(QLKhoa.class.getName()).log(Level.SEVERE, null, ex);
+//        }
+//        return false;
+//    }
+    private void btnThemMHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemMHActionPerformed
+        if (txtMaMH.getText().trim().equals("") || txtTenMH.getText().trim().equals("")) {
+            JOptionPane.showMessageDialog(null, " Bạn không được để trường trống");
+        } else {
+            try {
+                String query4 = "SELECT MaMH,TenMh FROM MonHoc";
+                pst = conn.prepareStatement(query4);
+                rs = pst.executeQuery();
+                if (rs.next()) {
+                    if (rs.getString("MaMH").equals(txtMaMH.getText().trim())) {
+                        JOptionPane.showMessageDialog(null, "Mã môn học đã tồn tại");
+                    } else {
+                        if (rs.getString("TenMh").equals(txtTenMH.getText().trim())) {
+                            JOptionPane.showMessageDialog(null, "Tên môn học đã tồn tại");
+                        } else {
+                            String query5 = "insert into MonHoc values (?,?,?,?,?,?,?)";
+
+                            pst1 = conn.prepareStatement(query5);
+
+                            pst1.setString(1, txtMaMH.getText());
+                            pst1.setString(2, txtTenMH.getText());
+                            String choose1, choose2, choose3, choose4;
+                            choose1 = cbxChuyenNganhDaoTao.getSelectedItem().toString();
+                            pst1.setString(3, choose1);
+                            choose2 = cbxKhoaDaoTao.getSelectedItem().toString();
+                            pst1.setString(4, choose2);
+                            if (rdbHocKy1.isSelected()) {
+                                gender = "Học kỳ I";
+                            } else {
+                                if (rdbHocKy2.isSelected()) {
+                                    gender = "Học kỳ II";
+                                } else {
+                                    //show
+                                }
+                            }
+
+                            pst1.setString(5, gender);
+                            choose3 = cbxNamHoc.getSelectedItem().toString();
+                            pst1.setString(6, choose3);
+                            choose4 = cbxDonViHocTrinhTC.getSelectedItem().toString();
+                            pst1.setString(7, choose4);
+
+                            pst1.executeUpdate();
+
+                            JOptionPane.showMessageDialog(null, "Thêm thành công");
+
+                        }
+                    }
+                }
+
+            } catch (SQLException ex) {
+                Logger.getLogger(QLMonHoc.class.getName()).log(Level.SEVERE, null, ex);
+            }
+        }
+        txtMaMH.setText("");
+        txtTenMH.setText("");
+        KhoaDAO.LoadTableBangKhoa(sql, jTableMonHoc);
+
+
+    }//GEN-LAST:event_btnThemMHActionPerformed
+
+    private void cbxChuyenNganhDaoTaoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxChuyenNganhDaoTaoActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxChuyenNganhDaoTaoActionPerformed
+
+    private void jTableMonHocMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTableMonHocMouseClicked
+        try {
+
+            txtMaMH.setText("");
+            txtTenMH.setText("");
+            int row = this.jTableMonHoc.getSelectedRow();
+            String IDrow = (this.jTableMonHoc.getModel().getValueAt(row, 0)).toString();
+            String sql1 = "SELECT * FROM MonHoc WHERE MaMH='" + IDrow + "'";
+            ResultSet rs2 = KhoaDAO.ShowTextField(sql1);
+            if (rs2.next()) {
+                this.txtMaMH.setText(rs2.getString("MaMH"));
+                this.txtTenMH.setText(rs2.getString("TenMh"));
+                this.cbxChuyenNganhDaoTao.setSelectedItem(rs2.getString("ChuyenNganhDT"));
+                if (rs2.getString("HocKy").equals("Học kỳ I")) {
+                    this.rdbHocKy1.setSelected(true);
+                } else if (rs2.getString("HocKy").equals("Học kỳ II")) {
+                    this.rdbHocKy2.setSelected(true);
+                }
+                this.cbxKhoaDaoTao.setSelectedItem(rs2.getString("KhoaDT"));
+                this.cbxNamHoc.setSelectedItem(rs2.getString("NamHoc"));
+                this.cbxDonViHocTrinhTC.setSelectedItem(rs2.getString("DVHT_TC"));
+
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(QLMonHoc.class.getName()).log(Level.SEVERE, null, ex);
+        }
+
+
+    }//GEN-LAST:event_jTableMonHocMouseClicked
+
+    private void btnSuaMHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaMHActionPerformed
+        String hocKy = null;
+        if (this.rdbHocKy1.isSelected()) {
+            hocKy = "Học kỳ I";
+        } else if (this.rdbHocKy2.isSelected()) {
+            hocKy = "Học kỳ II";
+        }
+        String sql1 = "UPDATE MonHoc SET TenMh = N'" + txtTenMH.getText() + "', ChuyenNganhDT =N'" + cbxChuyenNganhDaoTao.getSelectedItem() + "', KhoaDT =N'" + cbxKhoaDaoTao.getSelectedItem() + "', HocKy =N'" + hocKy + "', NamHoc =N'" + cbxNamHoc.getSelectedItem() + "', DVHT_TC =N'" + cbxDonViHocTrinhTC.getSelectedItem() + "' WHERE MaMH='" + txtMaMH.getText() + "'";
+        try {
+            pst = conn.prepareStatement(sql1);
+            pst.executeUpdate();
+            JOptionPane.showMessageDialog(null, "Cập nhật thông tin thành công", "Thông báo", 1);
+            txtTenMH.setText("");
+            txtMaMH.setText("");
+            KhoaDAO.LoadTableBangKhoa(sql, jTableMonHoc);
+
+        } catch (Exception e) {
+        }
+
+
+    }//GEN-LAST:event_btnSuaMHActionPerformed
+
+    private void rdbHocKy1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdbHocKy1ActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_rdbHocKy1ActionPerformed
+
+    private void btnXoaMHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaMHActionPerformed
+        if ((JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn xóa không?", "Thông báo", 2)) == 0) {
+            String sql2 = "DELETE FROM MonHoc Where MaMH='" + txtMaMH.getText() + "'";
+            try {
+                pst = conn.prepareStatement(sql2);
+                pst.executeUpdate();
+                JOptionPane.showMessageDialog(null, "Xóa thành công!", "Thông báo", 1);
+                txtTenMH.setText("");
+                txtMaMH.setText("");
+                KhoaDAO.LoadTableBangKhoa(sql, jTableMonHoc);
+
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Không thể xóa");
+            }
+        }
+
+
+    }//GEN-LAST:event_btnXoaMHActionPerformed
+
+    private void btnTimKiemMHActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTimKiemMHActionPerformed
+        if (txtTimKiemMH.getText().trim().equals("")) {
+            String sql2 = "SELECT * FROM MonHoc ";
+            KhoaDAO.LoadTableBangKhoa(sql2, jTableMonHoc);            
+        }
+        else{
+            String sql2 = "select * FROM MonHoc Where TenMh like N'%" +txtTimKiemMH.getText().trim()+ "%'";
+        KhoaDAO.LoadTableBangKhoa(sql2, jTableMonHoc);
+        txtTimKiemMH.setText("");
+        }
+       
+
+
+    }//GEN-LAST:event_btnTimKiemMHActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnSuaMH;
     private javax.swing.JButton btnThemMH;
     private javax.swing.JButton btnTimKiemMH;
     private javax.swing.JButton btnXoaMH;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JComboBox<String> cbxChuyenNganhDaoTao;
     private javax.swing.JComboBox<String> cbxDonViHocTrinhTC;
     private javax.swing.JComboBox<String> cbxKhoaDaoTao;

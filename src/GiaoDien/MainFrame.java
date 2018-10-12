@@ -227,7 +227,7 @@ public class MainFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnThongKeGioDayActionPerformed
 
     private void btnQLGiangVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQLGiangVienActionPerformed
-        QLGiangVienMoi pnlGiangVien = new QLGiangVienMoi();
+        QLGiangVien pnlGiangVien = new QLGiangVien();
         spltPane.setRightComponent(pnlGiangVien);
     }//GEN-LAST:event_btnQLGiangVienActionPerformed
 

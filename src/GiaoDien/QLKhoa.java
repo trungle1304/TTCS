@@ -41,6 +41,8 @@ public class QLKhoa extends javax.swing.JPanel {
     public QLKhoa() {
         initComponents();
         KhoaDAO.LoadTableBangKhoa(sql, jTableDanhsachKhoa);
+        KhoaDAO.LoadTableBangKhoa(query1, jTableDanhsachBoMon);
+        KhoaDAO.LoadCombobx(query2, cbxTaoTenKhoa_BM, "TenKhoa");
   
     }
     
@@ -447,6 +449,12 @@ public class QLKhoa extends javax.swing.JPanel {
         jLabel22.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         jLabel22.setText("Tên khoa");
 
+        cbxSuaTenKhoa_BM.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbxSuaTenKhoa_BMActionPerformed(evt);
+            }
+        });
+
         btnCapNhatBoMon.setFont(new java.awt.Font("Arial", 0, 11)); // NOI18N
         btnCapNhatBoMon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/btn_save.png"))); // NOI18N
         btnCapNhatBoMon.setText("Lưu");
@@ -656,7 +664,7 @@ public class QLKhoa extends javax.swing.JPanel {
             if(rs.next()){
                 this.txtSuaMaBoMon.setText(rs.getString("IDBM"));
                 this.txtSuaTenBoMon.setText(rs.getString("TenBM"));
-                
+                this.cbxSuaTenKhoa_BM.setSelectedItem(rs.getString("TenKhoa"));
             }
              KhoaDAO.LoadCombobx(query2, cbxSuaTenKhoa_BM, "TenKhoa");
            
@@ -666,6 +674,10 @@ public class QLKhoa extends javax.swing.JPanel {
         }
         
     }//GEN-LAST:event_jTableDanhsachBoMonMouseClicked
+
+    private void cbxSuaTenKhoa_BMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbxSuaTenKhoa_BMActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbxSuaTenKhoa_BMActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

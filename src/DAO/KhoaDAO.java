@@ -29,12 +29,9 @@ public class KhoaDAO {
 
     public static void LoadTableBangKhoa(String sql, JTable tb) {
         try {
-            String[] tieuDe = new String[]{"Mã khoa", "Tên khoa", "Mô tả khoa"};
-        DefaultTableModel bangKhoa = new DefaultTableModel(tieuDe, 0);
-      
+
             pst = conn.prepareStatement(sql);
             rs = pst.executeQuery();
-            tb.setModel(bangKhoa);
             tb.setModel((DbUtils.resultSetToTableModel(rs)));
 
             //ngay chỗ này là nạp dữ liệu lên bảng
@@ -101,5 +98,8 @@ public class KhoaDAO {
             Logger.getLogger(KhoaDAO.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
+ 
+    
+
 
 }
